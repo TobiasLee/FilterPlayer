@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FilterPlayer</string>
+    <string-array name="cameraFilterNames">
+        <item>Normal</item>
+        <item>Black &amp; white</item>
+        <item>Filter: blur</item>
+        <item>Filter: sharpen</item>
+        <item>Filter: edge detect</item>
+        <item>Filter: emboss</item>
+    </string-array>
+</resources>
