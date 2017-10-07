@@ -27,7 +27,7 @@ import cc.ralee.filterplayer.gles.Texture2dProgram;
  */
 
 public class VideoRenderer extends SurfaceView implements GLSurfaceView.Renderer{
-    private static final String SAMPLE = Environment.getExternalStorageDirectory() + "/VIDEO0016.mp4";
+    private String videoPath = null;
 
     private Context context;
     private final String TAG = "VideoRenderer";
@@ -45,17 +45,17 @@ public class VideoRenderer extends SurfaceView implements GLSurfaceView.Renderer
     private int mNewFilter;
     private boolean mIncomingSizeUpdated;
 
-    public VideoRenderer(Context context, GLSurfaceView glSurfaceView, SeekBar seekBar) {
+    public VideoRenderer(Context context, GLSurfaceView glSurfaceView, SeekBar seekBar, String videoPath) {
         super(context);
         this.mGLSurfaceView = glSurfaceView;
         Log.d(TAG, "VideoRenderer: created");
         mCurrentFilter = -1;
         mNewFilter = MainActivity.FILTER_NONE;
         this.seekBar = seekBar;
+        this.videoPath = videoPath;
     }
 
     protected int surfaceWidth, surfaceHeight;
-
 
     public void updateFilter() {
         Texture2dProgram.ProgramType programType;
@@ -147,15 +147,19 @@ public class VideoRenderer extends SurfaceView implements GLSurfaceView.Renderer
 //        }
 
         if( playerWithSurface == null ) {
-            playerWithSurface = new MediaPlayerWithSurface(SAMPLE,mSurface,seekBar);
-            playerWithSurface.playVideoToSurface();
+            playerWithSurface = new MediaPlayerWithSurface(videoPath, mSurface, seekBar);
+//            playerWithSurface.playVideoToSurface();
         }
 
         GLES20.glViewport(0,0,width, height);
         surfaceWidth = width;
         surfaceHeight = height;
 
+    }
 
+    public void changeVideoPathAndPlay(String videoPath) {
+        playerWithSurface.changeVideoPath(videoPath);
+        playerWithSurface.playVideoToSurface();
     }
 
     @Override
@@ -192,7 +196,7 @@ public class VideoRenderer extends SurfaceView implements GLSurfaceView.Renderer
             Log.d(TAG, "run: start to run");
             extractor = new MediaExtractor();
             try {
-                extractor.setDataSource(SAMPLE);
+                extractor.setDataSource(videoPath);
                 Log.d(TAG, "Data Source set");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -308,7 +312,7 @@ public class VideoRenderer extends SurfaceView implements GLSurfaceView.Renderer
         }
     }
 
-    public void startPlay() {
+    private void startPlay() {
         playerWithSurface.startPlay();
     }
 

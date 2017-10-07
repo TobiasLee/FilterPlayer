@@ -29,10 +29,13 @@ public class MediaPlayerWithSurface implements  MediaPlayer.OnPreparedListener {
     public void playVideoToSurface() {
         preparePlayer();
     }
-
+    public void changeVideoPath(String newVideoPath) {
+        this.videoPath = newVideoPath;
+    }
     private void preparePlayer() {
         mediaPlayer.reset();
         File file = new File(videoPath);
+        Log.d("Moive File", "Exists:" + file.exists());
         try {
             mediaPlayer.setDataSource(file.getPath());
             mediaPlayer.setScreenOnWhilePlaying(true);
