@@ -1,6 +1,6 @@
 # Filter Player
 
-FilterPlayer,using mediaplayer and GLSurfaceView,plays video with filter，and can change filter mode at real time.  
+FilterPlayer, using mediaplayer and GLSurfaceView,plays video with filter，and can change filter mode at real time.  
 
 It's a small demo under the help of [**cauchywei**](https://github.com/cauchywei).
 
